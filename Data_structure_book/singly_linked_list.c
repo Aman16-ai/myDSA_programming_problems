@@ -59,7 +59,7 @@ void display() {
         }
     }
 }
-void DeleteLinkedList() {
+void DeleteLinkedList(struct ListNode *head) {
     struct ListNode *temp,*i;
     i = head;
     while(i) {
@@ -69,7 +69,7 @@ void DeleteLinkedList() {
     }
     head = NULL;
 }
-int Length() {
+int Length(struct ListNode *head) {
     struct ListNode *temp;
     int count = 0;
     temp = head;
@@ -79,28 +79,40 @@ int Length() {
     }
     return count;
 }
+
+// struct ListNode* ReverseLinkedList(struct ListNode *head) {
+//     //using iteratible approach
+//     struct ListNode *temp,*tail = NULL;
+//     while(head!=NULL) {
+//         temp = head->next;
+//         head->next = tail;
+//         tail = head;
+//         head = temp;
+//     }
+//     struct ListNode *newHead = tail;
+//     return newHead;
+// }
+void reverse_list() {
+    struct ListNode *temp,*tail = NULL;
+
+    //iterative approach
+    while(head!=NULL) {
+        temp = head;
+        head = head->next;
+        temp->next = tail;
+        tail = temp;
+    }
+    head = tail;
+}
 int main() {
     insertNode(1,1);
     insertNode(3,2);
-    insertNode(14,3);
-    insertNode(44,4);
-    insertNode(55,5);
+    insertNode(4,3);
+    insertNode(5,4);
+    printf("Linked list before reverse");
     display();
-
-    //Checking the length of the list
-    printf("\nThe length of the list is %d ",Length());
-
-    //deleting the node at position 2;
-    DeleteNode(2); 
-    printf("\nAfter delete the node at position 2\n");
-    display();
-
-    //Checking the length of the list
-    printf("\nThe length of the list is %d ",Length());
-
-    //Deleting the all nodes of the list;
-    DeleteLinkedList();
-    printf("\nAfter deleting all nodes of the list\n");
+    printf("Linked list after reversed\n");
+    reverse_list();
     display();
     return 0;
 }

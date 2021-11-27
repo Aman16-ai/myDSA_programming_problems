@@ -16,15 +16,48 @@ No valid pair exists.
 
 */
 #include<iostream>
+#include<vector>
+#include<algorithm>
+#include<unordered_map>
 using namespace std;
-
-void sum_finder_pair(int *arr,int n,int sum_query) {
-    int l,r;
-    l = 0;
-    r = n-1;
-    
+vector<int> twoSum(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        vector<int> pair;
+        int low = 0;
+        int high = nums.size() - 1;
+        while(low < high) {
+            if(nums[low] + nums[high] < target) {
+                low++;
+            }
+            else if(nums[low] + nums[high] > target) {
+                high--;
+            }
+            else {
+                pair.push_back(low);
+                pair.push_back(high);
+                break;
+            }
+        }
+        return pair;
 }
-
+vector<int> TowSumHash(vector<int>&nums,int target) {
+    unordered_map <int,int>mp;
+    for(int i =0;i<nums.size();i++) {
+        if(mp.find(target - nums[i]) != mp.end()) {
+            vector<int> result;
+            result.push_back(i);
+            result.push_back(mp[target - nums[i]]);
+            return result;
+        } 
+        mp[nums[i]] = i;
+    }
+}
 int main() {
-
+    vector<int> arr{3,2,4};
+    int target =  6;
+    vector<int> pair = TowSumHash(arr,target);
+    for(int i =0;i<pair.size();i++) {
+     cout<<endl<<pair[i];   
+    }
+    return 0;
 }

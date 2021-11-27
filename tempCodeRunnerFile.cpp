@@ -1,3 +1,3 @@
-for(int i=0;i<2;i++) {
-    //     cout<<endl<<index;
-    // }
+for(auto &m:mp) {
+        cout<<endl<<m.first<<" "<<m.second;
+    }
