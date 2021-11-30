@@ -8,7 +8,7 @@ class LinkedList {
            int data;
            node *next;
         }*head;
-        
+    
     public:
     LinkedList() {
         head = NULL;
@@ -17,20 +17,55 @@ class LinkedList {
     void nthNodeFromLastUsingTwoIterations(int n);  //time complexity --> O(m) and space complexity --> O(1)
     void nthNodeFromLastUsingHashing(int n); //time complexity --> O(m) and space complexity --> O(m)
     void nthNodeFromLastUsingTwoPointersOneIteration(int n); //time complexity --> O(m) and space complexity --> O(1)
+    void deleteNthNodeFromEnd(int n);
     void display();
 };
+
 void LinkedList::nthNodeFromLastUsingTwoPointersOneIteration(int n) {
-    node *p = head;
-    node *q = head;
+    node *fastptr = head;
+    node *slowptr = head;
     for(int i = 0;i<n;i++) {
-        p = p->next;
+        fastptr = fastptr->next;
     }
     //1->2->4->7->null;
-    while(p!=NULL) {
-        p = p->next;
-        q = q->next;
+    while(fastptr!=NULL) {
+        slowptr = slowptr->next;
+        fastptr = fastptr->next;
     }
-    cout<<endl<<"nth node from last is "<<q->data;
+    cout<<endl<<"nth node from last is "<<slowptr->data;
+
+    
+
+}
+void LinkedList::deleteNthNodeFromEnd(int n) {
+    node *fastptr = head;
+    node *slowptr = head;
+    node *q;
+    if(head == NULL) {
+        display();
+        return;
+    }
+    for(int i = 0;i<n;i++) {
+        fastptr = fastptr->next;
+    }
+    //1->2->4->7->null;
+    if(fastptr==NULL) {
+        head = head->next;
+        delete slowptr;
+        display();
+        return;
+    }
+    while(fastptr!=NULL) {
+        q = slowptr;
+        slowptr = slowptr->next;
+        fastptr = fastptr->next;
+    }
+    cout<<endl<<"nth node from last is "<<slowptr->data<<"\n";
+
+    q->next = slowptr->next;
+    delete slowptr;
+    display();
+
 }
 void LinkedList::nthNodeFromLastUsingHashing(int n) {
     node *t=head;
@@ -67,6 +102,7 @@ void LinkedList::nthNodeFromLastUsingTwoIterations(int n) {
 }
 void LinkedList::insertAtEnd(int data) {
     node *t,*temp;
+    int i=0;
     temp = new node();
     temp->data = data;
     temp->next = NULL;
@@ -77,6 +113,7 @@ void LinkedList::insertAtEnd(int data) {
         t = head;
         while(t->next!=NULL) {
             t = t->next;
+            i++;
         }
         t->next = temp;
     }
@@ -97,12 +134,12 @@ void LinkedList::display() {
 int main() {
     LinkedList list;
     list.insertAtEnd(1);
-    list.insertAtEnd(2);
-    list.insertAtEnd(4);
-    list.insertAtEnd(7);
-    list.insertAtEnd(45);
-    list.insertAtEnd(78);
+    // list.insertAtEnd(2);
+    // list.insertAtEnd(3);
+    // list.insertAtEnd(4);
+    // list.insertAtEnd(5);
     list.display();
-    list.nthNodeFromLastUsingHashing(1);
+    cout<<endl<<"Deleting nth node from last";
+    list.deleteNthNodeFromEnd(1);
     return 0;
 }
