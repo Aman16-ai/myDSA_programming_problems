@@ -14,13 +14,31 @@ class LinkedList {
         head = NULL;
     }
     void insertAtEnd(int data);
+    void insertInSortingManner(int data);
     void nthNodeFromLastUsingTwoIterations(int n);  //time complexity --> O(m) and space complexity --> O(1)
     void nthNodeFromLastUsingHashing(int n); //time complexity --> O(m) and space complexity --> O(m)
     void nthNodeFromLastUsingTwoPointersOneIteration(int n); //time complexity --> O(m) and space complexity --> O(1)
     void deleteNthNodeFromEnd(int n);
     void display();
 };
-
+void LinkedList::insertInSortingManner(int data) {
+    node *newNode,*current,*temp;
+    newNode = new node();
+    newNode->data = data;
+    newNode->next = NULL;
+    if(head == NULL) {
+        head = newNode;
+    }
+    else {
+        current = head;
+        while(current!=NULL && current->data < newNode->data) {
+            temp = current;
+            current = current->next;
+        }
+        temp->next = newNode;
+        newNode->next = current;
+    }
+}
 void LinkedList::nthNodeFromLastUsingTwoPointersOneIteration(int n) {
     node *fastptr = head;
     node *slowptr = head;
@@ -133,13 +151,12 @@ void LinkedList::display() {
 }
 int main() {
     LinkedList list;
-    list.insertAtEnd(1);
-    // list.insertAtEnd(2);
-    // list.insertAtEnd(3);
-    // list.insertAtEnd(4);
-    // list.insertAtEnd(5);
+    list.insertAtEnd(5);
+    list.insertAtEnd(6);
+    list.insertAtEnd(8);
+    list.insertInSortingManner(7);
+    list.insertInSortingManner(4);//corner case
     list.display();
-    cout<<endl<<"Deleting nth node from last";
-    list.deleteNthNodeFromEnd(1);
+    // list.nthNodeFromLastUsingTwoPointersOneIteration(2);
     return 0;
 }

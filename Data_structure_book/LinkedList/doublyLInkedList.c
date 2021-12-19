@@ -39,7 +39,55 @@ void insert(int position,int data) {
         temp->next->prev = newNode;
     temp->next = newNode;
 }
+void append(int data) {
+    struct DLLNode *newNode,*temp;
+    newNode = (struct DLLNode*)malloc(sizeof(struct DLLNode));
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    if(head == NULL) {
+        head = newNode;
+    }
+    else {
+        temp = head;
+        while(temp->next !=NULL) {
+            temp = temp->next;
+        }
+        newNode->prev = temp;
+        temp->next = newNode;
+    }
+}
 
+//Not correct
+void addInSortedList(int data) {
+    struct DLLNode *newNode,*temp,*t;
+    struct DLLNode *newHead = NULL;
+    temp = head;
+    while(temp!=NULL) {
+        newNode = (struct DLLNode*)malloc(sizeof(struct DLLNode));
+        newNode->next = NULL;
+        newNode->prev = NULL;
+        if(temp->data < data) {
+            newNode->data = temp->data;
+            temp->data = data;
+        }
+        else {
+            newNode->data = data;
+        }
+        if(newHead == NULL) {
+            newHead = newNode;
+        }
+        else {
+            t = newHead;
+            while(t->next != NULL) {
+                t = t->next;
+            }
+            newNode->prev = t;
+            t->next = newNode;
+        }
+    }
+    head = newHead;
+}
 void display() {
     struct DLLNode *temp;
     if(head==NULL) {
@@ -86,18 +134,17 @@ void deletetion(int position) {
 
 }
 int main() {
-    insert(1,5);
-    insert(2,45);
-    insert(3,78);
-    insert(4,55);
-    insert(5,87);
-    insert(4,23);
+    // insert(1,5);
+    // insert(2,45);
+    // insert(3,78);
+    // insert(4,55);
+    // insert(5,87);
+    append(5);
+    append(45);
+    append(100);
+    addInSortedList(4);
+    addInSortedList(6);
     display();
-    deletetion(2);
-    display();
-    deletetion(3);
-    display();
-    deletetion(1);
-    display();
+
     return 0;
 }

@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<conio.h>
 #include<stdlib.h>
+struct ListNode *reverse(struct ListNode * head);
 struct ListNode {
     int data;
     struct ListNode *next;
@@ -104,6 +105,20 @@ void reverse_list() {
     }
     head = tail;
 }
+void reserverListRecursive() {
+    struct ListNode *node;
+    node = reverse(head);
+    head = node;
+}
+struct ListNode* reverse(struct ListNode *head) {
+    if(head == NULL || head->next == NULL) {
+        return head;
+    }
+    struct ListNode *temp = reverse(head->next);
+    head->next->next = head;
+    head->next = NULL;
+    return temp;
+}
 int main() {
     insertNode(1,1);
     insertNode(3,2);
@@ -112,7 +127,7 @@ int main() {
     printf("Linked list before reverse");
     display();
     printf("Linked list after reversed\n");
-    reverse_list();
+    reserverListRecursive();
     display();
     return 0;
 }

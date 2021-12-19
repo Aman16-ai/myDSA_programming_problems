@@ -78,6 +78,29 @@ void firstNodeOfLoopFloydFindingAlogrithm(struct Node*h) {
 
 
 }
+int LengthOfLoop(struct Node *h) {
+    Node *slowptr = h;
+    Node *fastptr = h;
+    int count = 0;
+    bool isLoopExists = false;
+    while(slowptr && fastptr && fastptr->next != NULL) {
+        slowptr = slowptr->next;
+        fastptr = fastptr->next->next;
+        if(slowptr == fastptr) {
+            isLoopExists = true;
+            break;
+        }
+    }
+    if(isLoopExists) {
+        fastptr = fastptr->next;
+        while(slowptr != fastptr) {
+            count++;
+            fastptr = fastptr->next;
+        }
+    }
+    return count;
+}
+
  
 /* Driver program to test above function*/
 int main()
@@ -96,6 +119,7 @@ int main()
     if (detectLoopUsingFloydFindingAlgorithm(head)) {
         cout << "Loop found";
         firstNodeOfLoopFloydFindingAlogrithm(head);
+        cout<<endl<<"The length of the loop is "<<LengthOfLoop(head);
     }
     else
         cout << "No Loop";
